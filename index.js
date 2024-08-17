@@ -32,6 +32,19 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/products/:productName", async (req, res) => {
+      try {
+        const { productName } = req.params;
+        const result = await product_collection
+          .find({ productName: new RegExp(productName, "i") }) // Case-insensitive search
+          .toArray();
+
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Error retrieving products", error });
+      }
+    });
+
     app.get("/productslength", async (req, res) => {
       const result = await product_collection.find().toArray();
       res.send({ count: result.length });
