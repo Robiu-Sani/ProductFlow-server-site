@@ -54,7 +54,7 @@ async function run() {
       }
     });
 
-    app.get("/pasitionProductsByPrice", async (req, res) => {
+    app.get("/pasitionProductsByFromLowPrice", async (req, res) => {
       const page = parseInt(req.query.page);
       const size = parseInt(req.query.size);
 
