@@ -94,6 +94,26 @@ async function run() {
       }
     });
 
+    app.get("/pasitionProductsbynewtoOld", async (req, res) => {
+      const page = parseInt(req.query.page);
+      const size = parseInt(req.query.size);
+
+      try {
+        const result = await product_collection
+          .find()
+          .sort({ productCreationDateTime: -1 }) // Sort by creation date string in descending order
+          .skip(page * size)
+          .limit(size)
+          .toArray();
+
+        res.send(result);
+      } catch (error) {
+        res
+          .status(500)
+          .send({ error: "An error occurred while fetching products." });
+      }
+    });
+
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
